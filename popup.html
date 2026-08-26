@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!--
+  popup.html — FocusCapsule
+  UI for adding/removing scheduled focus checkpoints. Opens when the
+  user clicks the extension icon. Logic lives in popup.js.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FocusCapsule</title>
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+    body {
+      margin: 0;
+      width: 320px;
+      background: radial-gradient(circle at 50% 0%, #262C52 0%, #14172E 70%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #F5F3FF;
+    }
+    .fc-popup {
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .fc-eyebrow {
+      margin: 0 0 4px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #5EEAD4;
+    }
+    h1 {
+      margin: 0 0 4px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .fc-subtitle {
+      margin: 0 0 18px;
+      font-size: 12.5px;
+      color: #94A3B8;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .fc-row {
+      display: flex;
+      gap: 8px;
+    }
+    input[type="text"],
+    input[type="time"] {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 8px;
+      color: #F5F3FF;
+      padding: 9px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      box-sizing: border-box;
+    }
+    input[type="text"] {
+      flex: 1;
+      min-width: 0;
+    }
+    input[type="time"] {
+      width: 110px;
+    }
+    input[type="text"]:focus,
+    input[type="time"]:focus {
+      border-color: #5EEAD4;
+    }
+    button[type="submit"] {
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #14172E;
+      background: #5EEAD4;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button[type="submit"]:hover {
+      background: #7FF3DE;
+    }
+    .fc-section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #94A3B8;
+      margin: 0 0 8px;
+    }
+    #fc-task-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-height: 220px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .fc-task-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+    .fc-task-time {
+      font-size: 12px;
+      font-weight: 700;
+      color: #5EEAD4;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+    .fc-task-title {
+      flex: 1;
+      font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .fc-task-delete {
+      background: none;
+      border: none;
+      color: #94A3B8;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      padding: 2px 4px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .fc-task-delete:hover {
+      color: #F87171;
+    }
+    .fc-empty {
+      font-size: 12.5px;
+      color: #64748B;
+      padding: 10px 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="fc-popup">
+    <p class="fc-eyebrow">FocusCapsule</p>
+    <h1>Schedule your focus checkpoints</h1>
+    <p class="fc-subtitle">At the time you set, every open tab gets paused until you confirm you're starting the task.</p>
+
+    <form id="fc-task-form">
+      <div class="fc-row">
+        <input type="text" id="fc-task-title" placeholder="e.g. Write project report" maxlength="80" required />
+        <input type="time" id="fc-task-time" required />
+      </div>
+      <button type="submit">Add checkpoint</button>
+    </form>
+
+    <p class="fc-section-label">Today's checkpoints</p>
+    <ul id="fc-task-list"></ul>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

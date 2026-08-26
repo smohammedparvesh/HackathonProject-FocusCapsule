@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "FocusCapsule",
+  "version": "1.1",
+  "description": "Blocks impulsive tab-switching from One Tab Web to Onther Tab , and lets you schedule focus checkpoints throughout your day.",
+
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "alarms"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "FocusCapsule"
+  }
+}
